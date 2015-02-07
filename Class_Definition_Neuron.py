@@ -2,7 +2,7 @@
 import math
 
 class neuron:
-	"""Define the artificial neuron class. The number of layers per ANN network is predefined in variable layer_num, the number of neurons per layer is predefined in variable layer_volume"""
+	"""Define the artificial neuron class. The number of hidden layers per ANN network is predefined in variable layer"""
 	
 	def __init__(self,layer,sn):
 		self.layer=layer
