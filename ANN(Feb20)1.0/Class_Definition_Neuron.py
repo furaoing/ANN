@@ -34,4 +34,3 @@ class neuron:
 		for i in range(len(self.weight)):
 			delta_weight=alpha*self.error*self.out_signal
 			self.weight[i]+=delta_weight
-		self.bias=alpha*self.error

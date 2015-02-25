@@ -50,22 +50,24 @@ class ANN:
 		
 		self.output_error=[self.network_output[j]*(1-self.network_output[j])*(self.target_output[j]-self.network_output[j]) for j in range(self.target_var)]
 	
-	def backpropagation(self):
+	def re_weight(self):
+		for j in range(self.network_width): #the last hidden layer
+			self.Neu_hidden[self.network_depth-1][j].re_weight=[self.Neu_output[k].weight[j] for k in range(self.target_var)]
+				
+		for i in range(self.network_depth-2,-1,-1):
+			for j in range(self.network_width): #the rest hidden layers
+				self.Neu_hidden[i][j].re_weight=[self.Neu_hidden[i+1][k].weight[j] for k in range(self.network_width)]
+	
+	def feed_backward(self):
 		for j in range(self.target_var): #output layer
 			self.Neu_output[j].error=self.network_output[j]*(1-self.network_output[j])*(self.target_output[j]-self.network_output[j])
+			
+			for k in range(self.network_width):
+				delta_weight=self.alpha*self.Neu_output[j].error*self.Neu_hidden[k-1][k].out_signal
+				self.Neu_output[j].weight[k]+=delta_weight
 
-		for j in range(self.network_width): #last hidden layer		
-			self.Neu_hidden[self.network_depth-1][j].error=self.Neu_hidden[self.network_depth-1][j].out_signal*(1-self.Neu_hidden[self.network_depth-1][j].out_signal)*sum([self.Neu_output[k].weight[j]*self.Neu_output[k].error for k in range(self.target_var)])
-				
-				
-		for i in range(self.network_depth-2,-1,-1): #the remaining hidden layers
+		"""
+		for i in range(self.network_depth-2,-1,-1): #hidden layer
 			for j in range(self.network_width-1,-1,-1):
-				self.Neu_hidden[i][j].error=self.Neu_hidden[i][j].out_signal*(1-self.Neu_hidden[i][j].out_signal)*sum([self.Neu_hidden[i+1][k].weight[j]*self.Neu_hidden[i+1][k].error for k in range(self.network_width)])
-	
-	def update_network_weight(self):
-		for i in range(self.network_depth):
-			for j in range(self.network_width):
-				self.Neu_hidden[i][j].update_weight(self.alpha)
-				
-		for i in range(self.target_var):
-			self.Neu_output[i].update_weight(self.alpha)
+				self.Neu_hidden[i][j].error=self.Neu_hidden[i][j].out_signal*(1-self.Neu_hidden[i][j].out_signal)*sum([self.Neu_hidden[i+1][j].re_weight[k]*self.Neu_hidden[i][j])
+		"""

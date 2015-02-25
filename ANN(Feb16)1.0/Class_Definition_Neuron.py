@@ -9,7 +9,6 @@ class neuron:
 		self.sn=sn
 		self.sum=None
 		self.out_signal=None
-		self.error=None
 		
 	def initialize_synaptic_weight(self,weight):
 		self.weight=list()
@@ -29,9 +28,6 @@ class neuron:
 			
 	def activate(self):
 		self.out_signal=1/(1+math.exp(-self.sum))
-
-	def update_weight(self,alpha):
-		for i in range(len(self.weight)):
-			delta_weight=alpha*self.error*self.out_signal
-			self.weight[i]+=delta_weight
-		self.bias=alpha*self.error
+			
+	def backpropagation(self,error):
+		self.error=error

@@ -16,6 +16,8 @@ class neuron:
 		for i in range(len(weight)):
 			self.weight.append(weight[i])
 		
+		self.re_weight=list(self.weight)
+		
 	def receive_weighted_and_addup(self,in_signal):
 		"""Act as the adder in an artificial neuron"""
 		#self.in_signal=in_signal
@@ -29,9 +31,3 @@ class neuron:
 			
 	def activate(self):
 		self.out_signal=1/(1+math.exp(-self.sum))
-
-	def update_weight(self,alpha):
-		for i in range(len(self.weight)):
-			delta_weight=alpha*self.error*self.out_signal
-			self.weight[i]+=delta_weight
-		self.bias=alpha*self.error

@@ -48,7 +48,7 @@ class ANN:
 		
 			self.network_output[j]=self.Neu_output[j].out_signal
 		
-		self.output_error=[self.network_output[j]*(1-self.network_output[j])*(self.target_output[j]-self.network_output[j]) for j in range(self.target_var)]
+		self.output_error=sum([0.5*(self.target_output[j]-self.network_output[j])**2 for j in range(self.target_var)])
 	
 	def backpropagation(self):
 		for j in range(self.target_var): #output layer
