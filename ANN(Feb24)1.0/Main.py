@@ -17,7 +17,7 @@ alpha=2
 
 target_var=1
 
-x=ANN(network_depth,network_width,target_var, alpha)
+x=ANN(network_depth,network_width,target_var, alpha, 1)
 
 for i in range(network_depth):
 	for j in range(network_width):
@@ -37,7 +37,7 @@ for n in range(len(data)):
 converged=False
 
 #while not converged:
-for i in range(1000):
+for i in range(10000):
 	for n in range(len(data)):
 		"""prepare training examples"""
 		training_example=data[n]
@@ -57,32 +57,25 @@ for i in range(1000):
 		
 		error[n]=x.output_error
 	
-	#print(x.Neu_hidden[0][0].weight[0])
+	# print(x.Neu_hidden[0][0].weight[0])
 	
 	all_error=sum(error)
-	
+	print(all_error)
 	dev.append(all_error)
 	
 	#if all_error<2:
 		#converged=True
-
+"""
 network_output=list()
-
-for n in range(len(data)):
-		"""prepare training examples"""
-		training_example=data[n]
-
-		target_output=[target[n]]
-
-		input_signal=training_example
-		"""push training examples"""
-
-		x.receive(input_signal,target_output)	#load input stream and target output into the network
+_data = [0.6,0.1,0.9, 0.94, 0.2, 0.35]
+for n in range(len(_data)):
+		x.receive(_data,_data)	#load input stream and target output into the network
 
 		x.feed_forward()
 
 		network_output.append(x.network_output[0])
-		
+print(network_output)
+"""
 pylab.plot(dev)
 
 pylab.show()

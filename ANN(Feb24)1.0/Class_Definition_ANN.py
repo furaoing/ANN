@@ -3,15 +3,17 @@ from Class_Definition_Neuron import neuron
 
 class ANN:
 	"""define the ANN class. The number of hidden layers per ANN network is defined in variable network_depth, the number of neurons per layer is defined in variable network_width"""
-	def __init__(self,network_depth,network_width,target_var,alpha):
+	def __init__(self,network_depth,network_width,target_var,alpha, n_input):
 		self.network_depth=network_depth      
 		self.network_width=network_width
 		self.target_var=target_var
 		self.alpha=alpha
+		self.input_len = n_input
 	
 		self.Neu_hidden=list()   #Hidden neuron object container,(network_depth)X(network_width) array
-			
-		for i in range(self.network_depth): #initialize hidden layers
+
+		self.Neu_hidden.append([neuron(0,k) for k in range(self.network_width)])
+		for i in range(1, self.network_depth): #initialize hidden layers
 			self.Neu_hidden.append([neuron(i,k) for k in range(self.network_width)])
 			
 		self.Neu_output=list()   #Output neuron object container
