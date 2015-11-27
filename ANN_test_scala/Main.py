@@ -11,7 +11,7 @@ print("Program now initialize the network with default setting")
 """initialize network settings"""
 network_depth=3			#set the depth of this network
 
-network_width=3
+network_width=1
 
 alpha=1
 
@@ -21,17 +21,17 @@ n_input = 1
 x=ANN(network_depth,network_width,target_var, alpha, n_input)
 
 for j in range(network_width):
-    x.Neu_hidden[0][j].initialize_synaptic_weight([random.random()*1 for k in range(n_input)])
-    x.Neu_hidden[0][j].initialize_bias(random.random()*1)
+    x.Neu_hidden[0][j].initialize_synaptic_weight([1 for k in range(n_input)])
+    x.Neu_hidden[0][j].initialize_bias(1)
 
 for i in range(1, network_depth):
-	for j in range(network_width):
-		x.Neu_hidden[i][j].initialize_synaptic_weight([random.random()*1 for k in range(network_width)])
-		x.Neu_hidden[i][j].initialize_bias(random.random()*1)
-		
+    for j in range(network_width):
+        x.Neu_hidden[i][j].initialize_synaptic_weight([1 for k in range(network_width)])
+        x.Neu_hidden[i][j].initialize_bias(1)
+
 for i in range(target_var):
-	x.Neu_output[i].initialize_synaptic_weight([random.random()*1 for k in range(network_width)])
-	x.Neu_output[i].initialize_bias(random.random()*1)
+	x.Neu_output[i].initialize_synaptic_weight([1 for k in range(network_width)])
+	x.Neu_output[i].initialize_bias(1)
 """initialize network setting"""
 
 dev=list()
